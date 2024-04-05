@@ -1,0 +1,826 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={ACTION SPACE},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{ACTION SPACE}
+\author{}
+\date{\vspace{-2.5em}2024-04-05}
+
+\begin{document}
+\maketitle
+
+\hypertarget{a-statistical-data-analysis-on-heart-disease-prediction}{%
+\section{A Statistical Data Analysis on Heart Disease
+Prediction}\label{a-statistical-data-analysis-on-heart-disease-prediction}}
+
+\hypertarget{abstract}{%
+\subsection{Abstract}\label{abstract}}
+
+World Health Organization has estimated 12 million deaths occur
+worldwide, every year due to heart diseases. Half the deaths in the
+United States and other developed countries are due to cardio vascular
+diseases. The early prognosis of cardiovascular diseases can aid in
+making decisions on lifestyle changes in high risk patients and turn
+reduce the complications. This project intends to pinpoint the most
+relevant risk factors of heart disease as well as predict the overall
+risk using logistic regression.
+
+\hypertarget{introduction}{%
+\section{1 INTRODUCTION}\label{introduction}}
+
+\textbf{1.1 WHAT IS HEART DISEASE:}
+
+\includegraphics[width=3.20833in,height=\textheight]{image1.jpeg}
+
+A type of disease that affects the heart or blood vessels.The term
+``Heart disease'' refers several types of heart conditions. The most
+common heart disease is coronary artery disease (narrow or blocked
+coronary arteries), which can lead to chest pain, heart attacks, or
+stroke. Other heart diseases include congestive heart failure, heart
+rhythm problems, congenital heart disease (heart disease at birth), and
+endocarditis (inflamed inner layer of the heart). Also called
+cardiovascular disease. Heart disease is the leading cause of death in
+the United States, according to the Centers for Disease Control and
+Prevention (CDC). In the United States, 1 in every 4 deaths in is the
+result of a heart disease. \textbf{1.2 HOW THE HEART WORKS:} To
+understand the causes of heart disease, it helps to understand how the
+heart works. heart is a pump. It's a muscular organ about the size of
+our fist, located slightly left of center in our chest. Heart is divided
+into the right and the left sides.
+
+\begin{itemize}
+\tightlist
+\item
+  The right side of the heart includes the right atrium and ventricle.
+  It collects and pumps blood to the lungs through the pulmonary
+  arteries.
+\item
+  The lungs give the blood a new supply of oxygen. The lungs also
+  breathe out carbon dioxide, a waste product.
+\item
+  Oxygen-rich blood then enters the left side of the heart, including
+  the left atrium and ventricle.
+\item
+  The left side of the heart pumps blood through the largest artery in
+  the body (aorta) to supply tissues throughout the body with oxygen and
+  nutrients.
+\end{itemize}
+
+\includegraphics[width=4.98958in,height=\textheight]{image2.jpeg}
+
+FIGURE 1: Cross section of heart
+
+\hypertarget{different-types-of-heart-disease-and-their-causes}{%
+\subsubsection{1.3 DIFFERENT TYPES OF HEART DISEASE AND THEIR
+CAUSES:}\label{different-types-of-heart-disease-and-their-causes}}
+
+There are many types of heart disease. Some of them include:
+
+\hypertarget{coronary-artery-disease-or-cad}{%
+\paragraph{(1) Coronary Artery Disease OR
+CAD}\label{coronary-artery-disease-or-cad}}
+
+\hypertarget{section}{%
+\paragraph{\texorpdfstring{\protect\includegraphics{image3.jpeg}}{}}\label{section}}
+
+\textbf{Causes:} A buildup of fatty plaques in arteries
+(atherosclerosis) is the most common cause of coronary artery
+disease.Plaque buildup causes the inside of the arteries to narrow over
+time, which can partially or totally block the blood flow. This process
+is called atherosclerosis.
+
+\#\#\#(2) Congenital Heart Disease: Congenital heart defects usually
+develop while a baby is in the womb. Heart defects can develop as the
+heart develops, about a month after conception, changing the flow of
+blood in the heart. \textbf{Causes:} Some medical conditions,
+medications and genes may play a role in causing heart defects, Drinking
+alcohol, having diabetes or having habit of smoking during pregnancy can
+defect baby's heart. Heart defects can also develop in adults. As human
+ages, heart's structure can change, causing a heart defect.
+
+\includegraphics[width=6.45833in,height=\textheight]{image4.jpeg} FIGURE
+2: Congenital heart disease
+
+\hypertarget{heart-attack-or-myocardial-infraction}{%
+\paragraph{(3) Heart Attack or Myocardial
+Infraction}\label{heart-attack-or-myocardial-infraction}}
+
+Heart attack happens when the arteries leading to the heart become
+blocked, disrupting blood flow.
+
+\includegraphics[width=4.03125in,height=\textheight]{image5.jpeg}
+
+\textbf{Causes:} The leading cause of heart attacks is coronary heart
+disease. This is usually due to cholesterolcontaining deposits called
+plaques. Plaques can narrow the arteries, reducing blood flow to the
+heart. If a plaque breaks open, it can cause a blood clot in the heart.
+A heart attack may becaused by a complete or partial blockage of a heart
+(coronary) artery.
+
+\hypertarget{heart-muscle-disease-or-cardiomyopathy}{%
+\subsubsection{(4) Heart Muscle Disease or
+Cardiomyopathy:}\label{heart-muscle-disease-or-cardiomyopathy}}
+
+This condition can lead to heart failure. It occurs when the heart
+muscle becomes larger and stiffens, preventing it from pumping blood
+away from the heart. Some times blood can pool in the lungs.
+
+\textbf{Causes:}
+
+(i)Long-term high blood pressure
+
+(ii)Heart tissue damage from a heart attack
+
+(iii)Long-term rapid heart rate, can lead to Cardiomyopathy
+
+\includegraphics[width=6.9375in,height=\textheight]{image6.jpeg} FIGURE
+3: Cardiomyopathy
+
+\hypertarget{heart-failure-or-congestive-heart-failure}{%
+\paragraph{(5) Heart Failure or Congestive Heart
+Failure}\label{heart-failure-or-congestive-heart-failure}}
+
+This condition occurs when stiffness in the heart prevents the organ
+from pumping blood adequately through the body.
+
+\includegraphics[width=4.73958in,height=\textheight]{image7.jpeg}
+
+\textbf{Causes:} Conditions including high blood pressure,valve disease,
+thyroid disease, kidney disease, diabetes, or heart defects present at
+birth can all cause heart failure. In addition, heart failure can happen
+when several diseases or conditions are present at once.
+
+\hypertarget{heart-valve-disease}{%
+\paragraph{(6) Heart Valve Disease}\label{heart-valve-disease}}
+
+Valve disease happens when any of the four valves in the heart don't
+open or close properly and interrupt blood flow. If the defect in the
+valve happens at birth, it's called congenital heart disease.
+\textbf{Causes:} of valve disease: History of certain infections that
+can affect the heart History of certain forms of heart disease or heart
+attack High blood pressure, high cholesterol, diabetes and other heart
+disease risk factors Heart valve disease can cause many complications,
+including:,Heart failure, Stroke, Blood clots.
+
+\includegraphics[width=5.64583in,height=\textheight]{image8.jpeg}
+
+\hypertarget{abnormal-heart-rhythms-or-arrhythmia}{%
+\paragraph{7. Abnormal Heart Rhythms OR
+Arrhythmia:}\label{abnormal-heart-rhythms-or-arrhythmia}}
+
+This condition causes a fluctuation in the heartbeat that happens while
+at rest. \textbf{Causes:} :Excessive use of alcohol or caffeine,
+diabetes, stress, valvular heart disease can causes arrhythmia.
+
+\hypertarget{risk-factors}{%
+\subparagraph{1.4 RISK FACTORS:}\label{risk-factors}}
+
+Risk factors for developing heart disease include:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Age:} Growing older increases the risk of damaged and narrowed
+  arteries and aweakened or thickened heart muscle
+\item
+  \textbf{Sex:} Men are generally at greater risk of heart disease. The
+  risk for women increases after menopause.
+\item
+  \textbf{Family history:} A family history of heart disease increases
+  the risk of coronary artery disease, especially if a parent developed
+  it at an early age (before age 55 for a male relative, such as ones
+  brother or father, and 65 for a female relative, such as ones mother
+  or sister).
+\item
+  \textbf{Smoking:} Nicotine tightens blood vessels, and carbon monoxide
+  can damage their inner lining, making them more susceptible to
+  atherosclerosis. Heart attacks are more common in smokers than in
+  nonsmokers.
+\item
+  \textbf{Poor diet:} A diet that's high in fat, salt, sugar and
+  cholesterol can contribute to the development of heart disease.
+\item
+  \textbf{High blood pressure:} Uncontrolled high blood pressure can
+  result in hardening and thickening of arteries, narrowing the vessels
+  through which blood flows.
+\item
+  \textbf{High blood cholesterol levels:} High levels of cholesterol in
+  blood can increase the risk of plaque formation and atherosclerosis.
+\item
+  \textbf{Diabetes:} Diabetes increases the risk of heart disease. Both
+  conditions share similar risk factors, such as obesity and high blood
+  pressure.
+\item
+  \textbf{Obesity:} Excess weight typically worsens other heart disease
+  risk factors.
+\item
+  \textbf{Physical inactivity:} Lack of exercise also is associated with
+  many forms of heart disease and some of its other risk factors as
+  well.
+\item
+  \textbf{Stress:} Unrelieved stress may damage the arteries and worsen
+  other risk factors for heart disease.
+\end{itemize}
+
+\hypertarget{problem-definition}{%
+\subparagraph{1.5 PROBLEM DEFINITION:}\label{problem-definition}}
+
+The major challenge in heart disease is its detection. There are
+instruments available which can predict heart disease but either they
+are expensive or are not efficient to calculate chance of heart disease
+in human. Early detection of cardiac diseases can decrease the mortality
+rate and overall complications. However, it is not possible to monitor
+patients every day in all cases accurately and consultation of a patient
+for 24 hours by a doctor is not available since it requires more
+sapience,time and expertise. Since we have a good amount of data in
+today's world, we can use various statistical analysis to analyze the
+data for hidden patterns. The hidden patterns can be used for health
+diagnosis in medicinal data.
+
+\hypertarget{objective-of-the-project}{%
+\subparagraph{2 OBJECTIVE OF THE
+PROJECT:}\label{objective-of-the-project}}
+
+In this project work our objective is to model the chance of occurance
+of heart disease based on several associated covariates or features
+(age, sex, cholesterol, blood sugar blood pressure etc.).The goal of our
+heart disease prediction project is to determine if a patient should be
+diagnosed with heart disease or not, which is a binary outcome, so:
+Positive result = 1, the patient will be diagnosed with heart disease.
+Negative result = 0, the patient will not be diagnosed with heart
+disease. We have to find which model has the greatest accuracy and
+identify correlations in our data. Finally, we also have to determine
+which features are the most influential in our heart disease diagnosis.
+This will act as a tool to the physicians for predicting the probability
+of heart disease of a patient given the values of the relevant
+covariates of him/her
+
+\hypertarget{data-description}{%
+\subparagraph{3 DATA DESCRIPTION:}\label{data-description}}
+
+Cardiovascular diseases (CVDs) are the number 1 cause of death globally,
+taking an estimated 17.9 million lives each year, which accounts for
+31\% of all deaths worldwide. Four out of 5 CVD deaths are due to heart
+attacks and strokes, and one-third of these deaths occur prematurely in
+people under 70 years of age. Heart failure is a common event caused by
+CVDs and this dataset contains 11 features that can be used to predict a
+possible heart disease.
+
+\hypertarget{source-of-the-data}{%
+\subparagraph{3.1 SOURCE OF THE DATA:}\label{source-of-the-data}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Dataset:}
+  (\url{https://www.kaggle.com/datasets/fedesoriano/heart-failure-prediction})
+\end{itemize}
+
+This dataset was created by combining different datasets already
+available independently but not combined before. In this dataset, 5
+heart datasets are combined over 11 common features . The five datasets
+used for its curation are:
+
+\begin{itemize}
+\item
+  Cleveland: 303 observations
+\item
+  Hungarian: 294 observations
+\item
+  Switzerland: 123 observations
+\item
+  Long Beach VA: 200 observations
+\item
+  Stalog (Heart) Data Set: 270 observations
+\end{itemize}
+
+Total: 1190 observations
+
+Duplicated: 272 observations
+
+Final dataset: 918 observation
+
+3.2 THE DATA:
+
+This dataset contains 11 features age, sex chest pain type, resting
+blood pressure, fasting blood sugar, resting ecg, ST-slope, Exercise
+angina, Maximum heart rate achieved, cholesterol, oldpeak and the
+respons variable is Heart disease. From the original dataset we have
+converted the categorical covariates (Sex, Chestpain type, RestingECG,
+ExcerciseAgina, ST-slope) and the dependent variable or response heart
+disease into numerical form. Here some of the observations are shown in
+the following table:
+
+\begin{verbatim}
+##    Age Sex ChestPainType RestingBP Cholesterol FastingBS RestingECG MaxHR
+## 1   40   M           ATA       140         289         0     Normal   172
+## 2   49   F           NAP       160         180         0     Normal   156
+## 3   37   M           ATA       130         283         0         ST    98
+## 4   48   F           ASY       138         214         0     Normal   108
+## 5   54   M           NAP       150         195         0     Normal   122
+## 6   39   M           NAP       120         339         0     Normal   170
+## 7   45   F           ATA       130         237         0     Normal   170
+## 8   54   M           ATA       110         208         0     Normal   142
+## 9   37   M           ASY       140         207         0     Normal   130
+## 10  48   F           ATA       120         284         0     Normal   120
+##    ExerciseAngina Oldpeak ST_Slope HeartDisease
+## 1               N     0.0       Up            0
+## 2               N     1.0     Flat            1
+## 3               N     0.0       Up            0
+## 4               Y     1.5     Flat            1
+## 5               N     0.0       Up            0
+## 6               N     0.0       Up            0
+## 7               N     0.0       Up            0
+## 8               N     0.0       Up            0
+## 9               Y     1.5     Flat            1
+## 10              N     0.0       Up            0
+\end{verbatim}
+
+\hypertarget{graphical-representation-of-the-data}{%
+\paragraph{4 GRAPHICAL REPRESENTATION OF THE
+DATA:}\label{graphical-representation-of-the-data}}
+
+\textbf{(i)Presence and absence of heart disease:}
+
+\includegraphics{PROJECT-REPORT_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+FIGURE 5: Presence and absence of Heart Disease.
+
+\textbf{(ii) Age analysis:}
+
+\includegraphics{PROJECT-REPORT_files/figure-latex/unnamed-chunk-5-1.pdf}
+
+\hypertarget{figure-6-age-count}{%
+\subparagraph{FIGURE 6: Age count}\label{figure-6-age-count}}
+
+\begin{itemize}
+\tightlist
+\item
+  From the above graph we can say that most of patients are between age
+  50 to 65 in the data
+\end{itemize}
+
+\textbf{(iii) BP analysis:}
+
+\includegraphics{PROJECT-REPORT_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+\hypertarget{figure-7-bp-count}{%
+\subparagraph{FIGURE 7: BP count}\label{figure-7-bp-count}}
+
+\textbf{(iv) Compare Blood pressure across chest pain:}
+
+\includegraphics{PROJECT-REPORT_files/figure-latex/unnamed-chunk-7-1.pdf}
+
+\hypertarget{figure-8-compare-blood-pressure-across-chest-pain}{%
+\subparagraph{FIGURE 8: Compare Blood pressure across chest
+pain}\label{figure-8-compare-blood-pressure-across-chest-pain}}
+
+\begin{itemize}
+\tightlist
+\item
+  Here we are comparing blood pressure across chest pain for males and
+  females. From the above graph we can see that there are some outliers.
+\end{itemize}
+
+\textbf{(v) Compare Cholesterol across chest pain:}
+
+\includegraphics{PROJECT-REPORT_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+\hypertarget{figure-9-compare-cholesterol-across-chest-pain}{%
+\subparagraph{FIGURE 9: Compare Cholesterol across chest
+pain}\label{figure-9-compare-cholesterol-across-chest-pain}}
+
+\begin{itemize}
+\tightlist
+\item
+  Here we are comparing Cholesterol across chest pain for males and
+  females. From the above graph we can see that there are some outliers.
+\end{itemize}
+
+\textbf{(vi) Correlation between the attributes:}
+
+\includegraphics{PROJECT-REPORT_files/figure-latex/unnamed-chunk-9-1.pdf}
+
+\hypertarget{figure-10-correlation-plot}{%
+\subparagraph{FIGURE 10: Correlation
+plot}\label{figure-10-correlation-plot}}
+
+\begin{itemize}
+\tightlist
+\item
+  From the above plot we can see that correlation between Age and
+  cholesterol;BP and cholesterol; BP and maximum Heart rate; cholesterol
+  and oldpeak is very low.
+\end{itemize}
+
+\hypertarget{rayyan}{%
+\section{rayyan}\label{rayyan}}
+
+\hypertarget{two-by-two-table-analysis}{%
+\paragraph{6.3 TWO BY TWO TABLE
+ANALYSIS:}\label{two-by-two-table-analysis}}
+
+After preparing data we can do some case control by making sure all of
+the factor levels are represented by patients with and without heart
+disease and the results are given below:
+
+\emph{TABLE 1}
+
+\hypertarget{sex}{%
+\paragraph{SEX}\label{sex}}
+
+\begin{longtable}[]{@{}rrr@{}}
+\toprule\noalign{}
+HeartDisease & FEMALE & MALE \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+NO & 143 & 267 \\
+YES & 50 & 458 \\
+\end{longtable}
+
+\emph{TABLE 2}
+
+\hypertarget{chestpaintype}{%
+\paragraph{ChestPainType}\label{chestpaintype}}
+
+\begin{longtable}[]{@{}rrrrr@{}}
+\toprule\noalign{}
+HeartDisease & ASY & ATA & NAP & TA \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+0 & 104 & 149 & 131 & 26 \\
+1 & 392 & 24 & 72 & 20 \\
+\end{longtable}
+
+\emph{TABLE 3}
+
+\hypertarget{fastingbs}{%
+\paragraph{FastingBS}\label{fastingbs}}
+
+\begin{longtable}[]{@{}rrr@{}}
+\toprule\noalign{}
+HeartDisease & \textless=120 & \textgreater120 \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+NO & 366 & 44 \\
+YES & 338 & 170 \\
+\end{longtable}
+
+\emph{TABLE 4}
+
+\hypertarget{restingecg}{%
+\paragraph{RestingECG}\label{restingecg}}
+
+\begin{longtable}[]{@{}rrrr@{}}
+\toprule\noalign{}
+HeartDisease & LVH & Normal & ST \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+0 & 82 & 267 & 61 \\
+1 & 106 & 285 & 117 \\
+\end{longtable}
+
+\emph{TABLE 5}
+
+\hypertarget{chestpaintype-1}{%
+\paragraph{ChestPainType}\label{chestpaintype-1}}
+
+\begin{longtable}[]{@{}rrrrr@{}}
+\toprule\noalign{}
+HeartDisease & ASY & ATA & NAP & TA \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+0 & 104 & 149 & 131 & 26 \\
+1 & 392 & 24 & 72 & 20 \\
+\end{longtable}
+
+\emph{TABLE 6}
+
+\hypertarget{st_slope}{%
+\paragraph{ST\_Slope}\label{st_slope}}
+
+\begin{longtable}[]{@{}rrrr@{}}
+\toprule\noalign{}
+HeartDisease & Down & Flat & Up \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+0 & 14 & 79 & 317 \\
+1 & 49 & 381 & 78 \\
+\end{longtable}
+
+\emph{TABLE 7}
+
+\hypertarget{exerciseangina}{%
+\paragraph{ExerciseAngina}\label{exerciseangina}}
+
+\begin{longtable}[]{@{}rrr@{}}
+\toprule\noalign{}
+HeartDisease & N & Y \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+0 & 355 & 55 \\
+1 & 192 & 316 \\
+\end{longtable}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Analysis of 2×2 table (TABLE:2):}
+\end{itemize}
+
+Looking at the raw data from Table 2 we can say that most of the females
+don't have heart disease and most of the males have heart disease. Being
+female is likely to decrease the odds in having heart disease. Odds in
+case of female patients = 0.3496 In other words, if a sample is female,
+the odds are against it that result will be Yes. Being male is likely to
+increase the odds in having heart disease. Odds in case of male patients
+= 1.7153 In other words, if a sample is male, the odds are for it that
+the result will be yes. Here is the result of 2×2 table analysis for
+comparison test in R:
+
+\begin{verbatim}
+## 2 by 2 table analysis: 
+## ------------------------------------------------------ 
+## Outcome   : FEMALE 
+## Comparing : NO vs. YES 
+## 
+##     FEMALE MALE    P(FEMALE) 95% conf. interval
+## NO     143  267       0.3488    0.3042   0.3962
+## YES     50  458       0.0984    0.0754   0.1275
+## 
+##                                    95% conf. interval
+##              Relative Risk: 3.5436    2.6395   4.7574
+##          Sample Odds Ratio: 4.9059    3.4378   7.0011
+## Conditional MLE Odds Ratio: 4.8971    3.3972   7.1467
+##     Probability difference: 0.2504    0.1972   0.3030
+## 
+##              Exact P-value: 0.0000 
+##         Asymptotic P-value: 0.0000 
+## ------------------------------------------------------
+\end{verbatim}
+
+\hypertarget{analysis-using-logistic-regression}{%
+\paragraph{6.4 ANALYSIS USING LOGISTIC
+REGRESSION:}\label{analysis-using-logistic-regression}}
+
+Now we will jump to the logistic regression. Let us create a very simple
+model that uses sex to predict Heart disease. Let us denote sex with X.
+So here the model will be \(ln(\frac{\pi}{1-\pi})=\beta_o+\beta_1X\)
+
+\begin{verbatim}
+##              Estimate Std. Error   z value     Pr(>|z|)
+## (Intercept) -1.050822  0.1642953 -6.395931 1.595726e-10
+## SexMALE      1.590442  0.1814433  8.765503 1.859444e-18
+\end{verbatim}
+
+\hypertarget{interpretation}{%
+\paragraph{Interpretation:}\label{interpretation}}
+
+Going through the first coefficient, the intercept is the log(odds) a
+female has heart disease. This is because female is the first factor in
+``sex'' (the factors are ordered, alphabetically by default,``female'',
+``male''). Now the second coefficient, sexMALE is the log(odds ratio)
+that tells that if a sample has sex=MALE, the odds of having heart
+disease are, on a log scale, 1.59 times greater than if a sample has
+sex=FEMALE. Now let us see what this logistic regression predicts, given
+that a patient is either female or male through a plot;
+
+\includegraphics{PROJECT-REPORT_files/figure-latex/unnamed-chunk-13-1.pdf}
+
+Since there are only two probabilities (one for females and one for
+males), we can use a table to summarize the predicted probabilities. The
+result is given below:
+
+\begin{verbatim}
+##                    Sex
+## probability.of.hd   FEMALE MALE
+##   0.259067357513526    193    0
+##   0.63172413793103       0  725
+\end{verbatim}
+
+\hypertarget{table-8-predicted-probabilities-of-getting-heart-disease.}{%
+\subsubsection{TABLE 8: Predicted probabilities of getting heart
+disease.}\label{table-8-predicted-probabilities-of-getting-heart-disease.}}
+
+Now we will use other available covariates for prediction. Before
+creating model, we check our target variable proportions, i.e
+
+\begin{verbatim}
+## 
+##        NO       YES 
+## 0.4466231 0.5533769
+\end{verbatim}
+
+\textbf{Selection of covariates:} The common approach to statistical
+model building is minimization of variables until the most parsimonious
+model model that describes the data which also results in numerical
+stability and generalizability of the results. Inclusion of all other
+relevant variables in the model regardless of their significance can
+lead to numerical unstable estimates. Therefore We have to made
+purposeful selection of variables in logistic regression. \textbf{A
+decision to keep a variable in the model might be based on the
+statistical significance.} Finally, statistical significance should not
+be the sole criterion for inclusion of a term in a model. It is sensible
+to include a variable that is central to the purposes of the study and
+report its estimated effect even if it is not statistically significant.
+Other criteria besides significance tests can help select a good model
+in terms of estimating quantities of interest. \textbf{The best known is
+the Akaike information criterion i.e AIC.} AIC=-2×(maximized log
+likelihood - number of parameters in model) .We will use several
+variables that may have a significant effect toward our target variable
+like, age, sex, blood pressure, cholesterol, maximum heart rate,
+oldpeak. So, We will start with age(X1), sex(X2) (Model1). Therefore as
+per previous denotation here the equation is,
+
+\(ln \left(\frac{\pi_i}{1-\pi_i} \right) = \sum_{j=0}^{p}\beta_j x_{ij}\)
+
+independent with \(x_{io}\) = 1, i = 1(1)918 and p = 1, 2 Then we
+estimate the coefficients, the result given below
+
+\begin{verbatim}
+##                Estimate  Std. Error   z value     Pr(>|z|)
+## (Intercept) -4.63489288 0.481185190 -9.632243 5.843942e-22
+## Age          0.06653121 0.008165056  8.148285 3.691216e-16
+## SexM         1.64119501 0.189344877  8.667755 4.407236e-18
+\end{verbatim}
+
+\textbf{Interpretation:} We can see that Age and sex are significant
+toward heart disease.So keeping them in the model we add blood pressure
+and cholesterol (Model2) and perform the previous process. The results
+are shown below
+
+\begin{verbatim}
+##                 Estimate   Std. Error   z value     Pr(>|z|)
+## (Intercept) -4.536556683 0.6714886987 -6.755969 1.418840e-11
+## RestingBP    0.008729276 0.0041910009  2.082862 3.726381e-02
+## Cholesterol -0.003738244 0.0007424775 -5.034825 4.782861e-07
+## Age          0.059802161 0.0084460957  7.080450 1.436868e-12
+## SexM         1.477859457 0.1931725726  7.650462 2.002583e-14
+\end{verbatim}
+
+From the above result we see that Blood pressure is significant at 5\%
+level with heart disease. Now we will add maximum heart rate and old
+peak (Model3)
+
+\begin{verbatim}
+##                 Estimate   Std. Error    z value     Pr(>|z|)
+## (Intercept)  1.172133089 0.9994802310  1.1727426 2.408990e-01
+## RestingBP    0.004030559 0.0047297234  0.8521765 3.941161e-01
+## Cholesterol -0.003847012 0.0008394794 -4.5826160 4.591949e-06
+## Age          0.020919215 0.0099433645  2.1038367 3.539269e-02
+## SexM         1.300474066 0.2138253510  6.0819452 1.187332e-09
+## MaxHR       -0.026140546 0.0037676281 -6.9381970 3.971357e-12
+## Oldpeak      0.946047331 0.0976132382  9.6917933 3.267403e-22
+\end{verbatim}
+
+after adding two continuous covariates blood pressure becomes
+insignificant, which is unlikely. Therefore we need to drop them from
+the model as well as we will drop age (Model4) and then perform logistic
+regression again. And here is the results below:
+
+\begin{verbatim}
+##                 Estimate   Std. Error   z value     Pr(>|z|)
+## (Intercept) -2.225978977 0.5651345868 -3.938848 8.187393e-05
+## RestingBP    0.016196485 0.0040280049  4.020970 5.795908e-05
+## Cholesterol -0.004181964 0.0007185532 -5.819978 5.885549e-09
+## SexM         1.443330294 0.1869281226  7.721312 1.151386e-14
+\end{verbatim}
+
+So we can see that Blood pressure is significant with heart disease when
+we use cholesterol and sex as other two covariate. Now we illustrate the
+AIC values along with residual variance for this four models.
+
+\emph{TABLE 9}
+
+\begin{longtable}[]{@{}rrrr@{}}
+\toprule\noalign{}
+Model predictors & Residual deviance & df & AIC \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Model 1 & 1101.6 & 915 & 1107.6 \\
+Model 2 & 1072.5 & 913 & 1082.5 \\
+Model 3 & 885.97 & 911 & 899.97 \\
+Model 4 & 1126.5 & 914 & 1134.5 \\
+\end{longtable}
+
+For the 3rd model the AIC value is smallest. We will use this model for
+prediction as \textbf{lower AIC values indicate a better-fit model}
+
+\textbf{Prediction:} Let us predict response variable using 3rd model.
+Then we predict the response variable heart disease using those 6
+features or covariates and the plot is given below:
+
+\includegraphics{PROJECT-REPORT_files/figure-latex/unnamed-chunk-20-1.pdf}
+
+\hypertarget{conclusion}{%
+\subsubsection{6.5 CONCLUSION:}\label{conclusion}}
+
+The main problem in model building situations is to choose from a large
+set of covariates those that should be included in the `best' model.
+From the simple one covariate model we got the probability of getting
+heart disease is more likely for male (63.17\%) than female (25.91\%).
+Here we have chosen 6 covariates. We have seen that while taking account
+maximum heart rate and oldpeak, blood pressure becomes insignificant
+with heart disease which is not expected. In our data the correlation
+between heart rate and BP is negative i.e -0.112135. In real life the
+relationship between blood pressure and heart rate is location
+dependent. Therefore in spite of insignificance of Blood pressure, it
+can be used as a feature for prediction. So as per our analysis it is
+proposed to use the 6 features, Resting blood pressure, cholesterol,
+age, sex, maximum heart rate achieved and Oldpeak to predict heart
+disease
+
+\includegraphics{PROJECT-REPORT_files/figure-latex/unnamed-chunk-21-1.pdf}
+
+\textbf{FIGURE 13: Correlation between continuous variables}
+
+\end{document}
